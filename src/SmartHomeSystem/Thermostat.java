@@ -1,5 +1,7 @@
 package SmartHomeSystem;
 
+import SmartHomeSystem.Exceptions.UnsupportedActionException;
+
 /**
  * The {@code Thermostat} class represents a smart home thermostat device.
  * It implements the {@link Device} interface and provides methods to control and query the thermostat's status.
@@ -51,7 +53,8 @@ public class Thermostat implements Device {
         return id;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(int temperature) throws UnsupportedActionException {
         this.temperature = temperature;
+        SmartHomeHub.getInstance().checkTriggers();
     }
 }

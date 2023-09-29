@@ -26,17 +26,24 @@ public class Light implements Device {
 
     @Override
     public void turnOn(int id) {
-        if (this.id == id) {
+        if (this.id == id && status.equals("on")) {
             status = "on";
-            System.out.println("Light " + id + " is On.");
+            System.out.println("Light " + id + " is already on.");
+        }
+        else{
+            status = "on";
+            System.out.println("Light " + id + " is on.");
         }
     }
 
     @Override
     public void turnOff(int id) {
-        if (this.id == id) {
+        if (this.id == id && status.equals("off")) {
             status = "off";
-            System.out.println("Light " + id + " is Off.");
+            System.out.println("Light " + id + " is already off.");
+        }else{
+            status = "off";
+            System.out.println("Light " + id + " is off.");
         }
     }
 
