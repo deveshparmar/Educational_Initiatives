@@ -28,19 +28,25 @@ public class Trigger {
                     int deviceTemperature = ((Thermostat) device).getTemperature();
 
                     switch (operator) {
-                        case ">":
+                        case ">" -> {
                             return deviceTemperature > value;
-                        case "<":
+                        }
+                        case "<" -> {
                             return deviceTemperature < value;
-                        case ">=":
+                        }
+                        case ">=" -> {
                             return deviceTemperature >= value;
-                        case "<=":
+                        }
+                        case "<=" -> {
                             return deviceTemperature <= value;
-                        case "==":
+                        }
+                        case "==" -> {
                             return deviceTemperature == value;
-                        default:
+                        }
+                        default -> {
                             System.out.println("Unsupported operator: " + operator);
                             return false;
+                        }
                     }
                 }
             }

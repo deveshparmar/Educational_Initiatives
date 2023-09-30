@@ -18,6 +18,7 @@ public class Main {
             Device light1 = new Light(1, "light", "off");
             Device thermostat1 = new Thermostat(2, "thermostat", 75);
             Device door1 = new Door(3, "door", "locked");
+            Device door2 = new Door(4,"door","locked");
 
 
             // add devices to smart home hub
@@ -33,15 +34,19 @@ public class Main {
             // set scheduled task
             smartHomeHub.setSchedule(2, "06:00", "Turn On");
 
-//            smartHomeHub.setTimerSchedule(2,"21:54","Turn On");
+            /*
+            set scheduled task with real timer (Commented out)
 
+            smartHomeHub.setTimerSchedule(1,"13:16","Turn On");
+
+             */
 
             // set triggers
             smartHomeHub.addTrigger("temperature > 70", "turnOff(1)");
 
 
             // remove device dynamically
-            smartHomeHub.removeDevice(door1);
+            smartHomeHub.removeDevice(door2);
 
 
             // execution of schedule and triggers
@@ -56,7 +61,7 @@ public class Main {
             System.out.println("Error - " + e.getMessage());
         }
 
-        /* To implement - Implement timer, Add more devices and functionalities*/
+        /* To implement - Add more devices and functionalities */
 
     }
 }

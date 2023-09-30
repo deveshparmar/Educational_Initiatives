@@ -9,5 +9,6 @@ package SmartHomeSystem;
 public interface Device {
     void turnOn(int id);
     void turnOff(int id);
-    String getDeviceType();
+    String DeviceType();
 }
+
