@@ -41,7 +41,7 @@ public class Thermostat implements Device {
     }
 
     @Override
-    public String getDeviceType() {
+    public String DeviceType() {
         return "Thermostat";
     }
 

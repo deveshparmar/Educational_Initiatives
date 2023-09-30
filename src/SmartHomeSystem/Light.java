@@ -48,7 +48,7 @@ public class Light implements Device {
     }
 
     @Override
-    public String getDeviceType() {
+    public String DeviceType() {
         return "Light";
     }
 

@@ -6,9 +6,6 @@ import SmartHomeSystem.Exceptions.UnsupportedActionException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 /**
  * The {@code SmartHomeHub} class represents a central hub for controlling smart home devices,
@@ -86,7 +83,7 @@ public class SmartHomeHub {
         if (device != null) {
             Schedule schedule = new Schedule(device, time, action, deviceId);
             schedules.add(schedule);
-            System.out.println("{device: " + device.getDeviceType() + ", time: " + time + ", command: " + action + "}");
+            System.out.println("{device: " + device.DeviceType() + ", time: " + time + ", command: " + action + "}");
         } else {
             throw new UnsupportedActionException("Device with ID " + deviceId + " not found.");
         }
@@ -104,7 +101,7 @@ public class SmartHomeHub {
 
                 long delay = scheduledTime.getTime() - currTime.getTime();
 
-                System.out.println("Scheduled Task - [device: " + device.getDeviceType() + ", time: " + time + ", command: " + action + "]");
+                System.out.println("Scheduled Task - [device: " + device.DeviceType() + ", time: " + time + ", command: " + action + "]");
                 if (delay >= 0) {
                     Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
@@ -175,7 +172,7 @@ public class SmartHomeHub {
                     String action = trigger.getAction();
                     int id = trigger.getId();
                     System.out.println("Trigger - [condition: " + trigger.getCondition() + ", action: " + action + "(" + id + ")]");
-                    executeAction(action, device.getDeviceType(), id);
+                    executeAction(action, device.DeviceType(), id);
                 }
             }
         }
@@ -198,11 +195,11 @@ public class SmartHomeHub {
         StringBuilder sb = new StringBuilder();
         for (Device device : devices) {
             if (device instanceof Light) {
-                sb.append(device.getDeviceType() + " " + ((Light) device).getId() + " is " + ((Light) device).getStatus() + ".");
+                sb.append(device.DeviceType() + " " + ((Light) device).getId() + " is " + ((Light) device).getStatus() + ".");
             } else if (device instanceof Thermostat) {
-                sb.append(device.getDeviceType() + " " + ((Thermostat) device).getId() + " is set to " + ((Thermostat) device).getTemperature() + " degrees.");
+                sb.append(device.DeviceType() + " " + ((Thermostat) device).getId() + " is set to " + ((Thermostat) device).getTemperature() + " degrees.");
             } else if (device instanceof Door) {
-                sb.append(device.getDeviceType() + " " + ((Door) device).getId() + " is " + ((Door) device).getStatus() + ".");
+                sb.append(device.DeviceType() + " " + ((Door) device).getId() + " is " + ((Door) device).getStatus() + ".");
             }
         }
         return sb.toString();
