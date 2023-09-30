@@ -6,6 +6,9 @@ import SmartHomeSystem.Exceptions.UnsupportedActionException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The {@code SmartHomeHub} class represents a central hub for controlling smart home devices,
@@ -46,14 +49,14 @@ public class SmartHomeHub {
                 deviceFound = true;
             } else if (device instanceof Thermostat && ((Thermostat) device).getId() == id) {
                 device.turnOn(id);
-                deviceFound=true;
+                deviceFound = true;
             } else if (device instanceof Door && ((Door) device).getId() == id) {
                 device.turnOn(id);
-                deviceFound=true;
+                deviceFound = true;
             }
         }
-        if(!deviceFound){
-            throw new UnsupportedActionException("Device not found with id - " + id );
+        if (!deviceFound) {
+            throw new UnsupportedActionException("Device not found with id - " + id);
         }
     }
 
@@ -63,72 +66,69 @@ public class SmartHomeHub {
         for (Device device : devices) {
             if (device instanceof Light && ((Light) device).getId() == id) {
                 device.turnOff(id);
-                deviceFound=true;
+                deviceFound = true;
             } else if (device instanceof Thermostat && ((Thermostat) device).getId() == id) {
                 device.turnOff(id);
-                deviceFound=true;
+                deviceFound = true;
             } else if (device instanceof Door && ((Door) device).getId() == id) {
                 device.turnOff(id);
-                deviceFound=true;
+                deviceFound = true;
             }
         }
-        if(!deviceFound){
-            throw new UnsupportedActionException("Device not found with id - " + id );
+        if (!deviceFound) {
+            throw new UnsupportedActionException("Device not found with id - " + id);
         }
     }
 
     // set a schedule for device
     public void setSchedule(int deviceId, String time, String action) throws UnsupportedActionException {
         Device device = findDeviceById(deviceId);
-        if(device!=null) {
+        if (device != null) {
             Schedule schedule = new Schedule(device, time, action, deviceId);
             schedules.add(schedule);
             System.out.println("{device: " + device.getDeviceType() + ", time: " + time + ", command: " + action + "}");
-        }else{
+        } else {
             throw new UnsupportedActionException("Device with ID " + deviceId + " not found.");
         }
     }
 
-//    public void setTimerSchedule(int deviceId, String time, String action) throws UnsupportedActionException {
-//        Device device = findDeviceById(deviceId);
-//        if(device!=null) {
-//            Schedule schedule = new Schedule(device, time, action, deviceId);
-//            schedules.add(schedule);
-//            System.out.println("{device: " + device.getDeviceType() + ", time: " + time + ", command: " + action + "}");
-//
-//            try{
-//                SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-//                Date scheduledTime = dateFormat.parse(time);
-//
-//                Calendar calendar = Calendar.getInstance();
-//                long currMillis = calendar.getTimeInMillis();
-//
-//                calendar.setTime(scheduledTime);
-//                long schMillis = calendar.getTimeInMillis();
-//                long delay = schMillis - currMillis;
-//
-//                System.out.println("Current time - " + new Date(currMillis)));
-//                System.out.println("Scheduled Time - " + dateFormat.format(scheduledTime));
-//                System.out.println(delay);
-//
-//                if(delay>=0){
-//                    Timer timer = new Timer();
-//                    timer.schedule(new TimerTask() {
-//                        @Override
-//                        public void run() {
-//                            schedule.execute();
-//                        }
-//                    },delay);
-//                }else{
-//                    throw new UnsupportedActionException("The specified time is in the past.");
-//                }
-//            }catch (ParseException e){
-//                throw new UnsupportedActionException("Invalid time format.");
-//            }
-//        }else{
-//            throw new UnsupportedActionException("Device with ID " + deviceId + " not found.");
-//        }
-//    }
+    public void setTimerSchedule(int deviceId, String time, String action) throws UnsupportedActionException {
+        Device device = findDeviceById(deviceId);
+        if (device != null) {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                Date scheduledTime = format.parse(time);
+                Date date = new Date();
+                String s = format.format(date);
+                Date currTime = format.parse(s);
+
+                long delay = scheduledTime.getTime() - currTime.getTime();
+
+                System.out.println("Scheduled Task - [device: " + device.getDeviceType() + ", time: " + time + ", command: " + action + "]");
+                if (delay >= 0) {
+                    Timer timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            Schedule schedule = new Schedule(device, time, action, deviceId);
+                            schedules.add(schedule);
+                            schedule.execute();
+                            System.out.println("Status Report - " + getStatusReport());
+                            timer.cancel();
+                        }
+                    }, delay);
+
+                } else {
+                    throw new UnsupportedActionException("Invalid time");
+                }
+
+            } catch (ParseException e) {
+                throw new UnsupportedActionException("Invalid time format.");
+            }
+        } else {
+            throw new UnsupportedActionException("Device with ID " + deviceId + " not found.");
+        }
+    }
 
     private Device findDeviceById(int id) {
         for (Device device : devices) {
@@ -146,18 +146,18 @@ public class SmartHomeHub {
     // add trigger for device
     public void addTrigger(String condition, String action) throws InvalidTriggerException, UnsupportedActionException {
         String[] arr = action.split("[()]");
-            if (arr.length >= 2) {
-                String actionType = arr[0];
-                int id = Integer.parseInt(arr[1]);
-                Device device = findDeviceById(id);
-                if(device!=null) {
-                    triggers.add(new Trigger(condition, actionType, id));
-                }else{
-                    throw new UnsupportedActionException("Device with ID " + id + " not found.");
-                }
+        if (arr.length >= 2) {
+            String actionType = arr[0];
+            int id = Integer.parseInt(arr[1]);
+            Device device = findDeviceById(id);
+            if (device != null) {
+                triggers.add(new Trigger(condition, actionType, id));
             } else {
-                throw new InvalidTriggerException("Invalid Trigger format");
+                throw new UnsupportedActionException("Device with ID " + id + " not found.");
             }
+        } else {
+            throw new InvalidTriggerException("Invalid Trigger format");
+        }
     }
 
     // execute the schedule for device
@@ -174,7 +174,7 @@ public class SmartHomeHub {
                 if (trigger.isTriggered(device)) {
                     String action = trigger.getAction();
                     int id = trigger.getId();
-                    System.out.println("{condition: " + trigger.getCondition() + ", action: " + action + "(" + id + ")}");
+                    System.out.println("Trigger - [condition: " + trigger.getCondition() + ", action: " + action + "(" + id + ")]");
                     executeAction(action, device.getDeviceType(), id);
                 }
             }
@@ -182,13 +182,13 @@ public class SmartHomeHub {
     }
 
     // execute action on device
-    private void executeAction(String action, String deviceType, int id) throws UnsupportedActionException{
+    private void executeAction(String action, String deviceType, int id) throws UnsupportedActionException {
         if (action.equals("turnOff")) {
             turnOff(id);
         } else if (action.equals("turnOn")) {
             turnOn(id);
         } else {
-            throw new UnsupportedActionException("Unsupported Action - "+ action);
+            throw new UnsupportedActionException("Unsupported Action - " + action);
         }
     }
 
