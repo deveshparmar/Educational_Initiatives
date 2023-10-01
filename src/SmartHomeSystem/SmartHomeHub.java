@@ -110,7 +110,11 @@ public class SmartHomeHub {
                             Schedule schedule = new Schedule(device, time, action, deviceId);
                             schedules.add(schedule);
                             schedule.execute();
-                            System.out.println("Status Report - " + getStatusReport());
+                            try {
+                                System.out.println("Status Report - " + getStatusReport());
+                            } catch (UnsupportedActionException e) {
+                                throw new RuntimeException(e);
+                            }
                             timer.cancel();
                         }
                     }, delay);
@@ -190,16 +194,18 @@ public class SmartHomeHub {
     }
 
     // prints the status report of all devices
-    public String getStatusReport() {
-        List<String> deviceList = new ArrayList<>();
+    public String getStatusReport() throws UnsupportedActionException {
         StringBuilder sb = new StringBuilder();
         for (Device device : devices) {
             if (device instanceof Light) {
-                sb.append(device.DeviceType() + " " + ((Light) device).getId() + " is " + ((Light) device).getStatus() + ".");
+                sb.append(device.DeviceType()).append(" ").append(((Light) device).getId()).append(" is ").append(((Light) device).getStatus()).append(".");
             } else if (device instanceof Thermostat) {
-                sb.append(device.DeviceType() + " " + ((Thermostat) device).getId() + " is set to " + ((Thermostat) device).getTemperature() + " degrees.");
+                sb.append(device.DeviceType()).append(" ").append(((Thermostat) device).getId()).append(" is set to ").append(((Thermostat) device).getTemperature()).append(" degrees.");
             } else if (device instanceof Door) {
-                sb.append(device.DeviceType() + " " + ((Door) device).getId() + " is " + ((Door) device).getStatus() + ".");
+                sb.append(device.DeviceType()).append(" ").append(((Door) device).getId()).append(" is ").append(((Door) device).getStatus()).append(".");
+            }
+            else{
+                throw new UnsupportedActionException("Device - "+device.DeviceType() + " report doesn't exist");
             }
         }
         return sb.toString();
