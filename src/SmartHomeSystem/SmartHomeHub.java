@@ -15,9 +15,9 @@ import java.util.*;
 public class SmartHomeHub {
 
     private static SmartHomeHub currentInstance;
-    private List<Device> devices = new ArrayList<>();
-    private List<Schedule> schedules = new ArrayList<>();
-    private List<Trigger> triggers = new ArrayList<>();
+    private final List<Device> devices = new ArrayList<>();
+    private final List<Schedule> schedules = new ArrayList<>();
+    private final List<Trigger> triggers = new ArrayList<>();
 
     public SmartHomeHub() {
         currentInstance = this;
@@ -176,14 +176,14 @@ public class SmartHomeHub {
                     String action = trigger.getAction();
                     int id = trigger.getId();
                     System.out.println("Trigger - [condition: " + trigger.getCondition() + ", action: " + action + "(" + id + ")]");
-                    executeAction(action, device.DeviceType(), id);
+                    executeAction(action, id);
                 }
             }
         }
     }
 
     // execute action on device
-    private void executeAction(String action, String deviceType, int id) throws UnsupportedActionException {
+    private void executeAction(String action, int id) throws UnsupportedActionException {
         if (action.equals("turnOff")) {
             turnOff(id);
         } else if (action.equals("turnOn")) {
