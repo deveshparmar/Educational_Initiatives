@@ -21,6 +21,7 @@ public class SmartHomeHub {
     private final List<Schedule> schedules = new ArrayList<>();
     private final List<Trigger> triggers = new ArrayList<>();
 
+    private final List<DeviceObserver>observers = new ArrayList<>();
     private static final Logger logger = Logger.getLogger(SmartHomeHub.class.getName());
 
     public SmartHomeHub() {
@@ -34,11 +35,19 @@ public class SmartHomeHub {
     // add new device
     public void addDevice(Device device) {
         devices.add(device);
+        observers.add(device);
     }
 
     // remove device
     public void removeDevice(Device device) {
         devices.remove(device);
+        observers.remove(device);
+    }
+
+    private void notifyObservers(String message) {
+        for (DeviceObserver observer : observers) {
+            observer.update(message);
+        }
     }
 
     // turn on device
@@ -48,12 +57,15 @@ public class SmartHomeHub {
             if (device instanceof Light && ((Light) device).getId() == id) {
                 device.turnOn(id);
                 deviceFound = true;
+                notifyObservers("Light " + id + " is on.");
             } else if (device instanceof Thermostat && ((Thermostat) device).getId() == id) {
                 device.turnOn(id);
                 deviceFound = true;
+                notifyObservers("Thermostat " + id + " is on.");
             } else if (device instanceof Door && ((Door) device).getId() == id) {
                 device.turnOn(id);
                 deviceFound = true;
+                notifyObservers("Door " + id + " is on.");
             }
         }
         if (!deviceFound) {
@@ -69,12 +81,15 @@ public class SmartHomeHub {
             if (device instanceof Light && ((Light) device).getId() == id) {
                 device.turnOff(id);
                 deviceFound = true;
+                notifyObservers("Light " + id + " is off.");
             } else if (device instanceof Thermostat && ((Thermostat) device).getId() == id) {
                 device.turnOff(id);
                 deviceFound = true;
+                notifyObservers("Thermostat " + id + " is off.");
             } else if (device instanceof Door && ((Door) device).getId() == id) {
                 device.turnOff(id);
                 deviceFound = true;
+                notifyObservers("Door " + id + " is off.");
             }
         }
         if (!deviceFound) {
@@ -83,20 +98,8 @@ public class SmartHomeHub {
         }
     }
 
-    // set a schedule for device
+    // set a timer schedule for device
     public void setSchedule(int deviceId, String time, String action) throws UnsupportedActionException {
-        Device device = findDeviceById(deviceId);
-        if (device != null) {
-            Schedule schedule = new Schedule(device, time, action, deviceId);
-            schedules.add(schedule);
-            System.out.println("{device: " + device.DeviceType() + ", time: " + time + ", command: " + action + "}");
-        } else {
-            logger.log(Level.WARNING,"Device with ID " + deviceId + " not found.");
-            throw new UnsupportedActionException("Device with ID " + deviceId + " not found.");
-        }
-    }
-
-    public void setTimerSchedule(int deviceId, String time, String action) throws UnsupportedActionException {
         Device device = findDeviceById(deviceId);
         if (device != null) {
             try {

@@ -1,5 +1,7 @@
 package SmartHomeSystem;
 
+import java.util.logging.Logger;
+
 /**
  * The {@code Light} class represents a smart home light device.
  * It implements the {@link Device} interface and provides methods to control and query the light's status.
@@ -17,6 +19,8 @@ public class Light implements Device {
     private int id;
     private String status;
     private String type;
+
+    private static final Logger logger = Logger.getLogger(Light.class.getName());
 
     public Light(int id, String type, String status) {
         this.id = id;
@@ -58,5 +62,10 @@ public class Light implements Device {
 
     public int getId() {
         return id;
+    }
+
+    @Override
+    public void update(String message) {
+        logger.info("[Received update for Light " + getId() + ": " + message + "]");
     }
 }

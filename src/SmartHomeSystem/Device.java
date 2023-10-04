@@ -6,7 +6,7 @@ package SmartHomeSystem;
  * and get the device's type.
  */
 
-public interface Device {
+public interface Device extends DeviceObserver {
     void turnOn(int id);
     void turnOff(int id);
     String DeviceType();

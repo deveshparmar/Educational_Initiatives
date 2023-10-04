@@ -36,27 +36,19 @@ public class Main {
             smartHomeHub.turnOn(1);
 
 
-            // set scheduled task
-            smartHomeHub.setSchedule(2, "06:00", "Turn On");
-
-//            set scheduled task with real timer (Commented out)
-//
-//            smartHomeHub.setTimerSchedule(1,"19:11","Turn On");
-
+            // schedule task with timer (set timer before running the program)
+            smartHomeHub.setSchedule(1,"19:11","Turn On");
 
 
             // set triggers
             smartHomeHub.addTrigger("temperature > 70", "turnOff(1)");
 
-
             // remove device dynamically
             smartHomeHub.removeDevice(door2);
-
 
             // execution of schedule and triggers
             smartHomeHub.executeSchedules();
             smartHomeHub.checkTriggers();
-
 
             // print status report
             System.out.println("Status Report - " + smartHomeHub.getStatusReport());
@@ -65,8 +57,5 @@ public class Main {
             logger.log(Level.WARNING,e.getMessage());
             System.out.println("Error - " + "Some Error occurred");
         }
-
-        /* To implement - Add more devices and functionalities */
-
     }
 }
