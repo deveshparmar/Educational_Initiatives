@@ -12,8 +12,12 @@ Java (JDK-20)
 - Add and remove devices dynamically.
 - Custom exceptions for handling unsupported actions and invalid trigger conditions.
 
+## Flow architecture
+![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/f3ebc6cf-7fa2-4473-838e-c3a1856a6fa0)
+
 ## UML diagram
 ![uml](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/2dc1d543-f691-4732-a1a9-0cc8869cf893)
 
-## Flow architecture
-![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/f3ebc6cf-7fa2-4473-838e-c3a1856a6fa0)
+## Output Screenshots
+![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/64afc0cd-d541-4fff-b59a-b7027cad4ac1)
+
