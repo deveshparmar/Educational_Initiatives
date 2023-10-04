@@ -6,6 +6,8 @@ import SmartHomeSystem.Exceptions.UnsupportedActionException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The {@code SmartHomeHub} class represents a central hub for controlling smart home devices,
@@ -18,6 +20,8 @@ public class SmartHomeHub {
     private final List<Device> devices = new ArrayList<>();
     private final List<Schedule> schedules = new ArrayList<>();
     private final List<Trigger> triggers = new ArrayList<>();
+
+    private static final Logger logger = Logger.getLogger(SmartHomeHub.class.getName());
 
     public SmartHomeHub() {
         currentInstance = this;
@@ -53,6 +57,7 @@ public class SmartHomeHub {
             }
         }
         if (!deviceFound) {
+            logger.log(Level.WARNING,"Device not found with id - " + id);
             throw new UnsupportedActionException("Device not found with id - " + id);
         }
     }
@@ -73,6 +78,7 @@ public class SmartHomeHub {
             }
         }
         if (!deviceFound) {
+            logger.log(Level.WARNING,"Device not found with id - " + id);
             throw new UnsupportedActionException("Device not found with id - " + id);
         }
     }
@@ -85,6 +91,7 @@ public class SmartHomeHub {
             schedules.add(schedule);
             System.out.println("{device: " + device.DeviceType() + ", time: " + time + ", command: " + action + "}");
         } else {
+            logger.log(Level.WARNING,"Device with ID " + deviceId + " not found.");
             throw new UnsupportedActionException("Device with ID " + deviceId + " not found.");
         }
     }
@@ -109,24 +116,33 @@ public class SmartHomeHub {
                         public void run() {
                             Schedule schedule = new Schedule(device, time, action, deviceId);
                             schedules.add(schedule);
-                            schedule.execute();
+                            try {
+                                schedule.execute();
+                            } catch (UnsupportedActionException e) {
+                                logger.log(Level.WARNING,e.getMessage());
+                                throw new RuntimeException(e);
+                            }
                             try {
                                 System.out.println("Status Report - " + getStatusReport());
                             } catch (UnsupportedActionException e) {
-                                throw new RuntimeException(e);
+                                logger.log(Level.WARNING,e.getMessage());
+                                throw new RuntimeException("Cant get status report");
                             }
                             timer.cancel();
                         }
                     }, delay);
 
                 } else {
+                    logger.log(Level.WARNING,"Invalid time");
                     throw new UnsupportedActionException("Invalid time");
                 }
 
             } catch (ParseException e) {
+                logger.log(Level.WARNING,e.getMessage());
                 throw new UnsupportedActionException("Invalid time format.");
             }
         } else {
+            logger.log(Level.WARNING,"Device with ID " + deviceId + " not found.");
             throw new UnsupportedActionException("Device with ID " + deviceId + " not found.");
         }
     }
@@ -162,7 +178,7 @@ public class SmartHomeHub {
     }
 
     // execute the schedule for device
-    public void executeSchedules() {
+    public void executeSchedules() throws UnsupportedActionException {
         for (Schedule schedule : schedules) {
             schedule.execute();
         }

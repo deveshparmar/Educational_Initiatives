@@ -1,5 +1,8 @@
 package SmartHomeSystem;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * The {@code Trigger} class represents a trigger condition and action for automating tasks in a smart home system.
  */
@@ -8,6 +11,7 @@ public class Trigger {
     private String condition;
     private String action;
     private int id;
+    private static Logger logger = Logger.getLogger(Trigger.class.getName());
 
     public Trigger(String condition, String action, int id) {
         this.condition = condition;
@@ -44,7 +48,7 @@ public class Trigger {
                             return deviceTemperature == value;
                         }
                         default -> {
-                            System.out.println("Unsupported operator: " + operator);
+                            logger.log(Level.WARNING,"Unsupported operator: " + operator);
                             return false;
                         }
                     }
