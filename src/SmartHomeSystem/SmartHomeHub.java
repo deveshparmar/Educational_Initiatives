@@ -111,7 +111,7 @@ public class SmartHomeHub {
 
                 long delay = scheduledTime.getTime() - currTime.getTime();
 
-                System.out.println("Scheduled Task - [device: " + device.DeviceType() + ", time: " + time + ", command: " + action + "]");
+                System.out.println("Scheduled Task - [device: " + device.deviceType() + ", time: " + time + ", command: " + action + "]");
                 if (delay >= 0) {
                     Timer timer = new Timer();
                     timer.schedule(new TimerTask() {
@@ -217,14 +217,14 @@ public class SmartHomeHub {
         StringBuilder sb = new StringBuilder();
         for (Device device : devices) {
             if (device instanceof Light) {
-                sb.append(device.DeviceType()).append(" ").append(((Light) device).getId()).append(" is ").append(((Light) device).getStatus()).append(".");
+                sb.append(device.deviceType()).append(" ").append(((Light) device).getId()).append(" is ").append(((Light) device).getStatus()).append(".");
             } else if (device instanceof Thermostat) {
-                sb.append(device.DeviceType()).append(" ").append(((Thermostat) device).getId()).append(" is set to ").append(((Thermostat) device).getTemperature()).append(" degrees.");
+                sb.append(device.deviceType()).append(" ").append(((Thermostat) device).getId()).append(" is set to ").append(((Thermostat) device).getTemperature()).append(" degrees.");
             } else if (device instanceof Door) {
-                sb.append(device.DeviceType()).append(" ").append(((Door) device).getId()).append(" is ").append(((Door) device).getStatus()).append(".");
+                sb.append(device.deviceType()).append(" ").append(((Door) device).getId()).append(" is ").append(((Door) device).getStatus()).append(".");
             }
             else{
-                throw new UnsupportedActionException("Device - "+device.DeviceType() + " report doesn't exist");
+                throw new UnsupportedActionException("Device - "+device.deviceType() + " report doesn't exist");
             }
         }
         return sb.toString();

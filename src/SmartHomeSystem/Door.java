@@ -46,7 +46,7 @@ public class Door implements Device {
     }
 
     @Override
-    public String DeviceType() {
+    public String deviceType() {
         return "Door";
     }
 
