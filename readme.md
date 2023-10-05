@@ -4,6 +4,19 @@
 ## Built with
 Java (JDK-20)
 
+## Getting started
+- Clone the repository
+  ```shell
+   git clone https://github.com/deveshparmar/Educational_Initiatives.git
+  ```
+- Compile the project
+  ```shell
+  javac src/SmartHomeSystem/*.java src/SmartHomeSystemExceptions/*.java
+  ```
+- Run the Main.java (Entry Point)
+  ```shell
+  java -cp src Main
+  ```
 ## Project Structure
 - `src/` - Source code directory
   - `SmartHomeSystem/` - Main package for the application
@@ -22,15 +35,6 @@ Java (JDK-20)
     - `UnsupportedActionException.java` - Custom exception for unsupported actions
     - `InvalidTriggerException.java` - Custom exception for invalid triggers
     - `UnauthorizedAccess` - Custom exception for unauthorized access of device
-
-## Getting started
-- Clone the repository
-- ```shell
-   git clone https://github.com/yourusername/smart-home-system.git
-  ```
-- Open the project workspace in desired IDE
-- Run the Main.java (Entry Point)
-
   
 ## Features
 - Initialize the Smart Home System with different devices, each having a unique ID and type (light, thermostat, door lock).
