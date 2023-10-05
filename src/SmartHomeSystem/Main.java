@@ -1,6 +1,7 @@
 package SmartHomeSystem;
 
 import SmartHomeSystem.Exceptions.InvalidTriggerException;
+import SmartHomeSystem.Exceptions.UnauthorizedAccess;
 import SmartHomeSystem.Exceptions.UnsupportedActionException;
 
 import java.util.logging.Level;
@@ -56,7 +57,7 @@ public class Main {
             // print status report
             System.out.println("Status Report - " + smartHomeHub.getStatusReport());
 
-        }catch (UnsupportedActionException | InvalidTriggerException e){
+        }catch (UnsupportedActionException | InvalidTriggerException | UnauthorizedAccess e){
             logger.log(Level.WARNING,e.getMessage());
             System.out.println("Error - " + "Some Error occurred");
         }
