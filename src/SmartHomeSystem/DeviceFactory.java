@@ -1,5 +1,9 @@
 package SmartHomeSystem;
 
+/**
+ * The {@code DeviceFactory} class is responsible for creating instances of various devices in a smart home system.
+ */
+
 public class DeviceFactory {
     public static Device buildDevice(int id,String type,String status){
         return switch (type.toLowerCase()) {
