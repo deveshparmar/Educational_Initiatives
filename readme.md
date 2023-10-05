@@ -4,10 +4,33 @@
 ## Built with
 Java (JDK-20)
 
+## Project Structure
+- `src/` - Source code directory
+  - `SmartHomeSystem/` - Main package for the application
+    - `Device.java` - Interface representing smart home devices
+    - `DeviceFactory.java` - Factory class for creating devices
+    - `DeviceObserver.java` - Interface for observing device updates
+    - `DeviceProxy.java` - Proxy class for device access
+    - `Light.java` - Class representing light devices
+    - `Thermostat.java` - Class representing thermostat devices
+    - `Door.java` - Class representing door devices
+    - `SmartHomeHub.java` - Main smart home hub class
+    - `Trigger.java` - Class for defining automation triggers
+    - `Schedule.java` - Class for defining schedule for devices
+    - `Main.java` - Application entry point
+  - `SmartHomeSystemExceptions/` - Package for custom exceptions
+    - `UnsupportedActionException.java` - Custom exception for unsupported actions
+    - `InvalidTriggerException.java` - Custom exception for invalid triggers
+    - `UnauthorizedAccess` - Custom exception for unauthorized access of device
+
 ## Getting started
 - Clone the repository
+- ```shell
+   git clone https://github.com/yourusername/smart-home-system.git
+  ```
 - Open the project workspace in desired IDE
 - Run the Main.java (Entry Point)
+
   
 ## Features
 - Initialize the Smart Home System with different devices, each having a unique ID and type (light, thermostat, door lock).
