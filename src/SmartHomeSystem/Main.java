@@ -26,15 +26,12 @@ public class Main {
             Device door2 = DeviceFactory.buildDevice(4,"door","locked");
 
 
-            DeviceProxy deviceProxy = new DeviceProxy(light1,"admin");
-
             // add devices to smart home hub
             smartHomeHub.addDevice(light1);
             smartHomeHub.addDevice(thermostat1);
             smartHomeHub.addDevice(door1);
             smartHomeHub.addDevice(door2);
 
-            deviceProxy.turnOn();
 
             // turn on device with given id
             smartHomeHub.turnOn(1);
@@ -49,6 +46,10 @@ public class Main {
 
             // remove device dynamically
             smartHomeHub.removeDevice(door2);
+
+            // initialize proxy device with access control only username with "admin" can access as of now
+            DeviceProxy deviceProxy = new DeviceProxy(light1,"admin");
+            deviceProxy.turnOn();
 
             // execution of schedule and triggers
             smartHomeHub.executeSchedules();
