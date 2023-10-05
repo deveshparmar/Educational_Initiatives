@@ -1,5 +1,5 @@
 # Smart Home System
-**The Smart Home System is a Java-based application that simulates a smart home system, allowing users to control various smart devices such as lights, thermostats, and door locks via a central hub. Users can set schedules, automate tasks, view device status, and manage triggers.**
+**The Smart Home System is a Java-based application that simulates a smart home system, allowing us to control various smart devices such as lights, thermostats, and door locks via a central hub. Users can set schedules, automate tasks, view device status & reports, and manage triggers.**
 
 ## Built with
 Java (JDK-20)
