@@ -19,13 +19,13 @@ Java (JDK-20)
 - Logging for each component activity
 
 ## UML diagram
-![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/4a6a5f9e-a547-4d0a-a774-923e461d58ed)
+![image](https://raw.githubusercontent.com/deveshparmar/deveshparmar/main/uml.png)
 
 ## Output Screenshots
 1) Output
-![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/64afc0cd-d541-4fff-b59a-b7027cad4ac1)
+![image](https://raw.githubusercontent.com/deveshparmar/deveshparmar/main/Screenshot%202023-10-04%20191134.png)
 
 2) Logging for error and Custom Exception
-![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/f695b6e4-d4ea-4c34-a027-b50bff8b8014)
+![image](https://raw.githubusercontent.com/deveshparmar/deveshparmar/main/Screenshot%202023-10-05%20112409.png)
 
 
