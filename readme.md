@@ -20,5 +20,6 @@ Java (JDK-20)
 ![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/64afc0cd-d541-4fff-b59a-b7027cad4ac1)
 
 2) Logging for error and Custom Exception
-![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/b4b3c14e-752d-4e30-8250-129fb4604b41)
+![image](https://github.com/deveshparmar/Educational_Initiatives/assets/81907545/f695b6e4-d4ea-4c34-a027-b50bff8b8014)
+
 
