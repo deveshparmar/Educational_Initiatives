@@ -4,6 +4,11 @@
 ## Built with
 Java (JDK-20)
 
+## Getting started
+- Clone the repository
+- Open the project workspace in desired IDE
+- Run the Main.java (Entry Point)
+  
 ## Features
 - Initialize the Smart Home System with different devices, each having a unique ID and type (light, thermostat, door lock).
 - Turn devices on/off.
