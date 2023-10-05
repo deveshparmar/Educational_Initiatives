@@ -1,7 +1,10 @@
 package SmartHomeSystem;
 
-import SmartHomeSystem.Exceptions.UnauthorizedAccessException;
+/**
+ * The {@code DeviceProxy} class acts as a proxy for a Device, allowing controlled access based on user authorization.
+ */
 
+import SmartHomeSystem.Exceptions.UnauthorizedAccessException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
