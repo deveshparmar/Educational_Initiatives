@@ -1,6 +1,6 @@
 package SmartHomeSystem;
 
-import SmartHomeSystem.Exceptions.UnauthorizedAccess;
+import SmartHomeSystem.Exceptions.UnauthorizedAccessException;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,23 +15,23 @@ public class DeviceProxy {
         this.username = username;
     }
 
-    public void turnOn() throws UnauthorizedAccess {
+    public void turnOn() throws UnauthorizedAccessException {
         if(authorizeUser()) {
             realDevice.turnOn(realDevice.getId());
         }
         else {
             logger.log(Level.WARNING,"User not authenticated");
-            throw new UnauthorizedAccess("User not authenticated");
+            throw new UnauthorizedAccessException("User not authenticated");
         }
     }
 
-    public void turnOff() throws UnauthorizedAccess {
+    public void turnOff() throws UnauthorizedAccessException {
         if(authorizeUser()) {
             realDevice.turnOff(realDevice.getId());
         }
         else {
             logger.log(Level.WARNING,"User not authenticated");
-            throw new UnauthorizedAccess("User not authenticated");
+            throw new UnauthorizedAccessException("User not authenticated");
         }
     }
 
